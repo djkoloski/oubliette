@@ -1,0 +1,26 @@
+<shell id="testDungeon">
+
+	<action event="enter">
+		print "Test Dungeon"
+		print "A green slime oozes from the walls."
+		print "Most eerie..."
+		print "Welcome " + name + "!"
+		
+		set name "David"
+	</action>
+	
+	<command phrase="look">
+	
+		<action event="call">
+			print "Look where?"
+		</action>
+		
+	</command>
+	
+</shell>
+
+<state start="testDungeon">
+	<variable name="alignment" val="0" />
+	<variable name="happiness" val="50" />
+	<variable name="name" val="undefined" />
+</state>

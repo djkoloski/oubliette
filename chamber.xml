@@ -1,0 +1,249 @@
+<oubliette>
+	<shell id="darkRoom">
+		<action event="enter">
+			print "Dark Room"
+			print "It's hard to see anything in here..."
+			print "Type 'help' for help."
+		</action>
+		
+		<action event="default">
+			print "'" + ::_input + "' is not a valid command."
+			print "Type 'help' for help."
+		</action>
+		
+		<command phrase="help">
+			<action event="call">
+				print "The allowable commands are:"
+				print "	save"
+				print "	look"
+				print "	light [object]"
+				print "	pick up [object]"
+				print "	use [object] (on) [object]"
+				print "	open [object]"
+				print "	quit"
+			</action>
+		</command>
+		
+		<command phrase="save">
+			<action event="call">
+				save
+			</action>
+		</command>
+		
+		<command phrase="look">
+			<action event="call">
+				if (lamp_lit)
+				{
+					if (carpet_revealed)
+					{
+						if (have_key)
+						{
+							print "The room is mostly empty except for a well-worn table and the rug underfoot, which has been folded back."
+							print "A door looms at the back of the room."
+						}
+						else
+						{
+							print "The room is mostly empty except for a well-worn table and the rug underfoot, which has been folded back to reveal a key."
+							print "A door looms at the back of the room."
+						}
+					}
+					else
+					{
+						print "The room is mostly empty except for a well-worn table and the rug underfoot."
+						print "A door looms at the back of the room."
+					}
+				}
+				else
+				{
+					print "It's too dark to see anything in here."
+				}
+			</action>
+		</command>
+		
+		<command phrase="light">
+			<action event="call">
+				print "Light what? All you have is this lamp."
+			</action>
+			
+			<command phrase="lamp">
+				<action event="call">
+					if (lamp_lit)
+					{
+						print "You have already lit the lamp."
+					}
+					else
+					{
+						define lamp_lit
+						print "You light the lamp. The room brightens considerably."
+					}
+				</action>
+			</command>
+		</command>
+		
+		<command phrase="pick up">
+			<action event="call">
+				if (lamp_lit)
+				{
+					print "Pick up what?"
+				}
+				else
+				{
+					print "It's too dark to see anything."
+				}
+			</action>
+			
+			<command phrase="rug">
+				<action event="call">
+					if (lamp_lit)
+					{
+						if (carpet_revealed)
+						{
+							print "The rug is already folded back"
+						}
+						else
+						{
+							define carpet_revealed
+							print "You fold the rug back, which reveals a key."
+						}
+					}
+					else
+					{
+						print "It's too dark to see anything in here."
+					}
+				</action>
+			</command>
+			
+			<command phrase="key">
+				<action event="call">
+					if (lamp_lit)
+					{
+						if (carpet_revealed)
+						{
+							if (have_key)
+							{
+								print "You have already grabbed the key."
+							}
+							else
+							{
+								define have_key
+								print "You grab the key. It probably fits something nearby."
+							}
+						}
+						else
+						{
+							print "I don't see a key anywhere."
+						}
+					}
+					else
+					{
+						print "It's too dark to see anything in here."
+					}
+				</action>
+			</command>
+		</command>
+	
+		<command phrase="use">
+			<action event="call">
+				if (lamp_lit)
+				{
+					print "Use what?"
+				}
+				else
+				{
+					print "It's too dark to see anything in here."
+				}
+			</action>
+		
+			<command phrase="key">
+				<action event="call">
+					if (lamp_lit)
+					{
+						if (have_key)
+						{
+							print "Use the key on what?"
+						}
+						else
+						{
+							print "You don't have a key."
+						}
+					}
+					else
+					{
+						print "It's too dark to see anything in here."
+					}
+				</action>
+			
+				<command phrase="on door">
+					<action event="call">
+						if (lamp_lit)
+						{
+							if (have_key)
+							{
+								if (door_open)
+								{
+									print "The door is already open."
+								}
+								else
+								{
+									define door_open
+									print "The key turns and the lock clicks. The door is now unlocked."
+								}
+							}
+							else
+							{
+								print "You don't have a key."
+							}
+						}
+						else
+						{
+							print "It's too dark to see anything in here."
+						}
+					</action>
+				</command>
+			</command>
+		</command>
+	
+		<command phrase="open">
+			<action event="call">
+				if (lamp_lit)
+				{
+					print "Open what?"
+				}
+				else
+				{
+					print "It's too dark to see anything in here."
+				}
+			</action>
+			
+			<command phrase="door">
+				<action event="call">
+					if (lamp_lit)
+					{
+						if (door_open)
+						{
+							print "You open the door and proceed through."
+							print "After a long walk through the musty passage, you arrive at an exit."
+							print "You have escaped! You win!"
+							quit
+						}
+						else
+						{
+							print "The door is locked."
+						}
+					}
+					else
+					{
+						print "It's too dark to see anything in here"
+					}
+				</action>
+			</command>
+		</command>
+		
+		<command phrase="quit">
+			<action event="call">
+				print "Goodbye!"
+				quit
+			</action>
+		</command>
+	</shell>
+</oubliette>

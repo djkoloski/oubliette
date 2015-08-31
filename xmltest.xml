@@ -1,0 +1,70 @@
+<oubliette>
+	<shell id="math">
+		<action event="abs">
+			if (::_arg1 &lt; 0)
+			{
+				set ::_return 0 - ::_arg1
+			}
+			else
+			{
+				set ::_return ::_arg1
+			}
+		</action>
+		<action event="factor">
+			set ::_return 1
+			event "math::::factor_sub"
+		</action>
+		<action event="factor_sub">
+			set ::_return ::_return * ::_arg1
+			set ::_arg1 ::_arg1 - 1
+			if (::_arg1 &gt; 1)
+			{
+				event "math::::factor_sub"
+			}
+		</action>
+	</shell>
+	<shell id="main">
+		<command phrase="abs">
+			<action event="default">
+				set ::_arg1 ::_input
+				event "math::::abs"
+				print "The absolute value is " + ::_return
+			</action>
+			<action event="call">
+				print "You must enter a number to find the absolute value of."
+			</action>
+		</command>
+		<command phrase="factor">
+			<action event="default">
+				set ::_arg1 ::_input
+				
+				if (::_arg1 == 3)
+				{
+					print "We are racist"
+				}
+				else
+				{
+					if (::_arg1 &gt; 13)
+					{
+						print "That would break us."
+					}
+					else
+					{
+						set tempnum ::_arg1
+						event "math::::factor"
+						print tempnum + "! = " + ::_return
+					}
+				}
+			</action>
+			<action event="call">
+				print "You must enter a number to factorial."
+			</action>
+		</command>
+		<command phrase="quit">
+			<action event="call">
+				quit
+			</action>
+		</command>
+	</shell>
+	<state start="main" />
+</oubliette>

@@ -1,0 +1,46 @@
+<oubliette>
+	<shell id="mainMenu">
+		<action event="enter">
+			print "Oubliette Test v2.0"
+			print "Welcome to Oubliette!"
+			print "This adventure is intended to give you a basic understanding of how to use Oubliette2. Type 'help' for a list of commands."
+		</action>
+		
+		<action event="default">
+			print "You can't do that here."
+		</action>
+		
+		<command phrase="help">
+			<action event="call">
+				print "Commands:"
+				print "\tstart:\tStart a new game"
+				print "\tload:\tLoad a saved game"
+				print "\tquit:\tQuit the game"
+				print "\thelp:\tDisplay this message again"
+			</action>
+		</command>
+		
+		<command phrase="start">
+			<action event="call">
+				move "darkRoom"
+			</action>
+		</command>
+		
+		<command phrase="load">
+			<action event="call">
+				load
+			</action>
+		</command>
+		
+		<command phrase="quit">
+			<action event="call">
+				print "Goodbye!"
+				quit
+			</action>
+		</command>
+	</shell>
+	
+	<import path="chamber.xml" />
+
+	<state start="mainMenu" />
+</oubliette>
